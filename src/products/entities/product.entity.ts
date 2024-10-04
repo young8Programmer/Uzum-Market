@@ -1,5 +1,8 @@
 import { OrderItem } from "src/order_items/entities/order_item.entity";
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+
+
+
 
 @Entity()
 export class Product {
