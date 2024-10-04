@@ -10,6 +10,7 @@ import { PaymentModule } from './payments/payments.module';
 import { ProductsModule } from './products/products.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { CategoriesModule } from './categories/categories.module';
+import { CartItemsModule } from './cart_items/cart_items.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { CategoriesModule } from './categories/categories.module';
     PaymentModule,
     ProductsModule,
     CategoriesModule,
-    ReviewsModule
+    ReviewsModule,
+    CartItemsModule
 
   ],
   controllers: [AppController],
