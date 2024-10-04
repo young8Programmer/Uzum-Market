@@ -23,7 +23,7 @@ export class Order {
   @Column({ type: 'date' })
   @IsNotEmpty()
   @IsDateString()
-  order_data: Date; // O'zgartirildi
+  order_data: Date; 
 
   @Column({ type: 'varchar', length: 50 })
   @IsNotEmpty()
@@ -37,9 +37,11 @@ export class Order {
   @Min(0)
   total_amount: number;
 
-  @OneToMany(() => OrderItem, orderItem => orderItem.order)
-  orderItems: OrderItem[];
 
-  @ManyToOne(() => OrderStatusHistory, statusHistory => statusHistory.orders)
-  statusHistory: OrderStatusHistory;
+    @OneToMany(() => OrderItem, orderItem => orderItem.order)
+    orderItems: OrderItem[];
+  
+  @ManyToOne(() => OrderStatusHistory, statusHistory => statusHistory.order)
+statusHistory: OrderStatusHistory[];
+
 }

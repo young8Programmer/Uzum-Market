@@ -15,6 +15,8 @@ export class OrderStatusHistory {
 
     @OneToMany(() => Order, order => order.statusHistory)
     orders: Order[];  
+    @ManyToOne(() => Order, order => order.statusHistory) 
+    order: Order; 
 
     @Column({
         type: 'enum',
@@ -24,4 +26,5 @@ export class OrderStatusHistory {
 
     @Column({ type: 'timestamp' }) 
     changed_at: Date;
+ 
 }
