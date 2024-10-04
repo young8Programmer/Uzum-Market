@@ -7,23 +7,19 @@ export enum OrderStatus {
     COMPLETED = 'completed',
     CANCELLED = 'cancelled',
 }
-
 @Entity()
 export class OrderStatusHistory {
     @PrimaryGeneratedColumn()
     id: number;
-
     @OneToMany(() => Order, order => order.statusHistory)
     orders: Order[];  
     @ManyToOne(() => Order, order => order.statusHistory) 
     order: Order; 
-
     @Column({
         type: 'enum',
         enum: OrderStatus,
     })
     status: OrderStatus;
-
     @Column({ type: 'timestamp' }) 
     changed_at: Date;
  

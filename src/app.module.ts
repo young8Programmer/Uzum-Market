@@ -12,7 +12,6 @@ import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { OrderStatusHistoryModule } from './order_status_history/order_status_history.module';
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({
