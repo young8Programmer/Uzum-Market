@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import {
   IsNumber,
   IsDateString,
@@ -21,6 +22,10 @@ export class Order {
   @IsNotEmpty()
   @IsDateString()
   order_data: Date; 
+  @Column({ type: 'date' })
+  @IsNotEmpty()
+  @IsDateString()
+  order_data: Date;
   @Column({ type: 'varchar', length: 50 })
   @IsNotEmpty()
   @IsString()
@@ -35,4 +40,5 @@ export class Order {
     orderItems: OrderItem[];
   @ManyToOne(() => OrderStatusHistory, statusHistory => statusHistory.order)
 statusHistory: OrderStatusHistory[];
+
 }
