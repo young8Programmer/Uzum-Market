@@ -22,8 +22,7 @@ import { OrderStatusHistoryModule } from './order_status_history/order_status_hi
       password: '4545',
       database: 'uzum',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-    }),
+      synchronize: true, }),
     UserModule,
     AdminModule,
     OrderItemsModule,
@@ -34,7 +33,7 @@ import { OrderStatusHistoryModule } from './order_status_history/order_status_hi
     CategoriesModule,
     ReviewsModule,
     OrderStatusHistoryModule,
-  ],
+],
   controllers: [AppController],
   providers: [AppService],
 })

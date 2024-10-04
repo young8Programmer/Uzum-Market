@@ -9,7 +9,6 @@ import {
 } from 'class-validator';
 import { OrderStatusHistory } from 'src/order_status_history/entities/order_status_history.entity';
 import { OrderItem } from 'src/order_items/entities/order_item.entity';
-
 @Entity('orders')
 export class Order {
   @PrimaryGeneratedColumn()
