@@ -1,6 +1,5 @@
 import { User } from 'src/user/entities/user.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-
 @Entity()
 export class Admin {
   @PrimaryGeneratedColumn()

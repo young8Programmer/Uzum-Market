@@ -14,20 +14,28 @@ export class AdminService {
     private userService: UserService,
   ) {}
 
+  
   async create(createAdminDto: CreateAdminDto) {
     const user = await this.userService.findOne(createAdminDto.userId);
     if (!user) {
-      throw new NotFoundException(`ID ${createAdminDto.userId} bo'lgan foydalanuvchi topilmadi`)
+      throw new NotFoundException(`ID ${createAdminDto.userId} bo'lgan foydalanuvchi topilmadi`);
     }
-
-    this.validatePermissions(createAdminDto.permissions)
-
+  
+    // Shu yerda admin allaqachon mavjudligini tekshirish
+    const existingAdmin = await this.adminRepository.findOne({ where: { userId: createAdminDto.userId } });
+    if (existingAdmin) {
+      throw new BadRequestException(`Foydalanuvchi allaqachon admin sifatida qo'shilgan`);
+    }
+  
+    this.validatePermissions(createAdminDto.permissions);
+  
     const admin = this.adminRepository.create({
       userId: createAdminDto.userId,
       permissions: createAdminDto.permissions,
     });
     return this.adminRepository.save(admin);
   }
+  
 
   async update(id: number, updateAdminDto: UpdateAdminDto) {
     const admin = await this.findOne(id);

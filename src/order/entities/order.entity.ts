@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne } from 'typeorm';
+
 import {
   IsNumber,
   IsDateString,
@@ -11,25 +12,31 @@ import { OrderStatusHistory } from 'src/order_status_history/entities/order_stat
 import { OrderItem } from 'src/order_items/entities/order_item.entity';
 import { Payment } from 'src/payments/entities/payment.entity';
 
+
 @Entity('orders')
 export class Order {
   @PrimaryGeneratedColumn()
   id: number;
+
 
   @Column({ type: 'int' })
   @IsNotEmpty()
   @IsNumber()
   user_id: number;
 
+
   @Column({ type: 'date' })
   @IsNotEmpty()
   @IsDateString()
-  order_data: Date;
+  order_data: Date; 
+
+
 
   @Column({ type: 'varchar', length: 50 })
   @IsNotEmpty()
   @IsString()
   status: string;
+
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   @IsNotEmpty()
@@ -47,5 +54,4 @@ export class Order {
   @OneToMany(() => Payment, payment => payment.order)
   payments: Payment[];
 }
-
 

@@ -3,6 +3,10 @@ import { OrderItem } from "src/order_items/entities/order_item.entity";
 import { Review } from "src/reviews/entities/review.entity";
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from "typeorm";
 
+
+
+
+
 @Entity()
 export class Product {
     @PrimaryGeneratedColumn()
@@ -13,9 +17,6 @@ export class Product {
 
     @Column()
     description: string;
-
-    @Column("decimal")
-    price: number;
 
     @Column()
     stock_quantity: number;
@@ -34,4 +35,5 @@ export class Product {
 
     @OneToMany(() => Review, review => review.product)
     reviews: Review[];
+ 
 }

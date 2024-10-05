@@ -12,6 +12,10 @@ import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { OrderStatusHistoryModule } from './order_status_history/order_status_history.module';
+import { Order } from './order/entities/order.entity';
+import { Cart } from './cart/entities/cart.entity';
+
+import { CartItemsModule } from './cart_items/cart_items.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -28,11 +32,15 @@ import { OrderStatusHistoryModule } from './order_status_history/order_status_hi
     OrderItemsModule,
     CartModule,
     OrderModule,
+
+    Order,
+    Cart,
     PaymentModule,
     ProductsModule,
     CategoriesModule,
     ReviewsModule,
     OrderStatusHistoryModule,
+    CartItemsModule,
 ],
   controllers: [AppController],
   providers: [AppService],
