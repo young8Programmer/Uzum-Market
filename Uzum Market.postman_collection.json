@@ -258,7 +258,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"john_doe\",\r\n  \"password\": \"password123\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"phone_number\": \"+1234567890\",\r\n  \"role\": \"user\"\r\n}\r\n",
+							"raw": "{\r\n  \"username\": \"john Doe\",\r\n  \"password\": \"password123\",\r\n  \"email\": \"johaa@gmail.com\",\r\n  \"phone_number\": \"+998908678438\",\r\n  \"role\": \"admin\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -266,12 +266,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:2000/users",
+							"raw": "http://localhost:3000/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"users"
 							]
@@ -285,12 +285,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:2000/users",
+							"raw": "http://localhost:3000/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"users"
 							]
@@ -304,12 +304,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:2000/users/1",
+							"raw": "http://localhost:3000/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"users",
 								"1"
@@ -323,16 +323,25 @@
 					"request": {
 						"method": "PUT",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"john_doe\",\r\n  \"password\": \"password123\",\r\n  \"email\": \"john.doe@example.com\",\r\n  \"phone_number\": \"+998908678438\",\r\n  \"role\": \"user\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:2000/users/2",
+							"raw": "http://localhost:3000/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"users",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -344,15 +353,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:2000/users/2",
+							"raw": "http://localhost:3000/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"users",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -370,7 +379,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"userId\": 1,\r\n  \"permissions\": [\"CREATE_USER\", \"DELETE_USER\"]\r\n}\r\n",
+							"raw": "{\r\n  \"userId\": 3,\r\n  \"permissions\": [\"admin\"]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -378,12 +387,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:2000/admin",
+							"raw": "http://localhost:3000/admin",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"admin"
 							]
@@ -491,7 +500,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"userId\": 1,\r\n  \"addressLine1\": \"123 Main St\",\r\n  \"addressLine2\": \"Apt 4B\",\r\n  \"city\": \"New York\",\r\n  \"state\": \"NY\",\r\n  \"postalCode\": \"10001\",\r\n  \"country\": \"USA\"\r\n}\r\n",
+							"raw": "{\r\n  \"user_id\": 2,\r\n  \"address_line\": \"789 Oak St\",\r\n  \"address_line2\": \"Suite 100\",\r\n  \"city\": \"Capital City\",\r\n  \"state\": \"CA\",\r\n  \"postal_code\": 90001,\r\n  \"country\": \"USA\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -499,12 +508,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:2000/shipping-address",
+							"raw": "http://localhost:3000/shipping-address",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"shipping-address"
 							]
@@ -518,12 +527,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:2000/shipping-address",
+							"raw": "http://localhost:3000/shipping-address",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"shipping-address"
 							]
@@ -537,15 +546,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:2000/shipping-address/1",
+							"raw": "http://localhost:3000/shipping-address/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"shipping-address",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -554,18 +563,27 @@
 				{
 					"name": "Update",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": 4,\r\n  \"address_line\": \"456 Maple Ave\",\r\n  \"address_line2\": \"Apt 5B\",\r\n  \"city\": \"Metropolis\",\r\n  \"state\": \"NY\",\r\n  \"postal_code\": 10001,\r\n  \"country\": \"USA\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:2000/shipping-address/1",
+							"raw": "http://localhost:3000/shipping-address/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"shipping-address",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -577,15 +595,15 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:2000/shipping-address/2",
+							"raw": "http://localhost:3000/shipping-address/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "2000",
+							"port": "3000",
 							"path": [
 								"shipping-address",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -1069,6 +1087,127 @@
 							"port": "2000",
 							"path": [
 								"reviews",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "About Us",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Kompania Tarixi\",\r\n  \"description\": \"Bizning kompaniya rivojlanishi 2010 yildan boshlanadi, bugungi kunga kelib, biz ko'plab yutuqlarga erishdik.\",\r\n  \"mission\": \"O'zgaruvchan dunyoda sifatli xizmatlar taqdim etish.\",\r\n  \"values\": \"Sifat, Innovatsiya, Mijozga e'tibor.\",\r\n  \"history\": \"Birinchi loyihamiz 2011 yilda ishga tushirilgan.\",\r\n  \"team\": \"Bizning jamoamiz 50 dan ortiq mutaxassislardan iborat.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/about-us",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"about-us"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/about-us",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"about-us"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/about-us/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"about-us",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Yangi sarlavha\",\r\n  \"description\": \"Yangi ta'rif.\",\r\n  \"mission\": \"Yangi missiya.\",\r\n  \"values\": \"Yangi qadriyatlar.\",\r\n  \"history\": \"Yangi tarix.\",\r\n  \"team\": \"Yangi jamoa.\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/about-us/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"about-us",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/about-us/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"about-us",
 								"1"
 							]
 						}
