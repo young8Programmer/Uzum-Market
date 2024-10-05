@@ -14,15 +14,17 @@ import { CartItemsModule } from './cart_items/cart_items.module';
 
 @Module({
   imports: [
+    
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'Vali336699',
-      database: 'n9',
+      password: '',
+      database: '',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
+
     }),
     UserModule,
     AdminModule,
