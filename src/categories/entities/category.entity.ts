@@ -1,11 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @Entity()
-    @Unique(['name'])
+@Unique(['name'])
 export class Category {
-       @PrimaryGeneratedColumn()
-    id: number; 
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name:string
+  @Column()
+  name: string;
 }

@@ -25,7 +25,10 @@ export class OrderItemsService {
     return await this.orderItemRepository.findOne({ where: { id } });
   }
 
-  async update(id: number, updateOrderItemDto: UpdateOrderItemDto): Promise<OrderItem> {
+  async update(
+    id: number,
+    updateOrderItemDto: UpdateOrderItemDto,
+  ): Promise<OrderItem> {
     await this.orderItemRepository.update(id, updateOrderItemDto);
     return this.findOne(id); // Yangilangan order itemni qaytarish
   }

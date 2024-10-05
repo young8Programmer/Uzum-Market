@@ -9,35 +9,38 @@ import { Product } from './entities/product.entity';
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
-    private readonly productRepository: Repository<Product>, 
+    private readonly productRepository: Repository<Product>,
   ) {}
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
-    const newProduct = this.productRepository.create(createProductDto); 
-    return this.productRepository.save(newProduct); 
+    const newProduct = this.productRepository.create(createProductDto);
+    return this.productRepository.save(newProduct);
   }
 
   async findAll(): Promise<Product[]> {
-    return this.productRepository.find(); 
+    return this.productRepository.find();
   }
 
   async findOne(id: number): Promise<Product> {
     const product = await this.productRepository.findOne({ where: { id } });
     if (!product) {
-      throw new NotFoundException(`Product with ID ${id} not found`); 
+      throw new NotFoundException(`Product with ID ${id} not found`);
     }
     return product;
   }
 
-  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
+  async update(
+    id: number,
+    updateProductDto: UpdateProductDto,
+  ): Promise<Product> {
     const product = await this.findOne(id);
-    Object.assign(product, updateProductDto); 
+    Object.assign(product, updateProductDto);
     return this.productRepository.save(product);
   }
 
   // Mahsulotni o'chirish
   async remove(id: number): Promise<void> {
     const product = await this.findOne(id);
-    await this.productRepository.remove(product); 
+    await this.productRepository.remove(product);
   }
 }

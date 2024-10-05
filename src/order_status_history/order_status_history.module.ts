@@ -5,9 +5,7 @@ import { OrderStatusHistory } from './entities/order_status_history.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([OrderStatusHistory]),
-  ],
+  imports: [TypeOrmModule.forFeature([OrderStatusHistory])],
   controllers: [OrderStatusHistoryController],
   providers: [OrderStatusHistoryService],
 })

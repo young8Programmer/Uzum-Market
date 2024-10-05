@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -13,7 +17,10 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     const existingUser = await this.userRepository.findOne({
-      where: [{ username: createUserDto.username }, { email: createUserDto.email }],
+      where: [
+        { username: createUserDto.username },
+        { email: createUserDto.email },
+      ],
     });
 
     if (existingUser) {
@@ -39,7 +46,9 @@ export class UserService {
   async update(id: number, updateUserDto: CreateUserDto) {
     const user = await this.findOne(id);
     if (updateUserDto.email) {
-      const existingEmail = await this.userRepository.findOne({ where: { email: updateUserDto.email } });
+      const existingEmail = await this.userRepository.findOne({
+        where: { email: updateUserDto.email },
+      });
       if (existingEmail && existingEmail.id !== id) {
         throw new ConflictException('Email allaqachon mavjud');
       }

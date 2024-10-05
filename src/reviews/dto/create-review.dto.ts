@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsPositive,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateReviewDto {
   @IsNotEmpty()
@@ -9,16 +15,15 @@ export class CreateReviewDto {
   @IsNotEmpty()
   @IsNumber({}, { message: 'User ID must be a number' })
   @IsPositive()
-  user_id: number; 
+  user_id: number;
 
   @IsNotEmpty()
   @IsNumber({}, { message: 'Rating must be a number' })
   @IsPositive()
-  rating: number; 
+  rating: number;
 
   @IsNotEmpty()
   @IsString()
   @MaxLength(500)
   comment: string;
-
 }

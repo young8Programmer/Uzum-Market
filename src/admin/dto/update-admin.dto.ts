@@ -1,5 +1,4 @@
 export class UpdateAdminDto {
-    userId?: number
-    permissions?: string[]
+  userId?: number;
+  permissions?: string[];
 }
-  

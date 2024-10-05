@@ -12,8 +12,12 @@ export class OrderStatusHistoryService {
     private readonly orderStatusHistoryRepository: Repository<OrderStatusHistory>,
   ) {}
 
-  async create(createOrderStatusHistoryDto: CreateOrderStatusHistoryDto): Promise<OrderStatusHistory> {
-    const orderStatusHistory = this.orderStatusHistoryRepository.create(createOrderStatusHistoryDto);
+  async create(
+    createOrderStatusHistoryDto: CreateOrderStatusHistoryDto,
+  ): Promise<OrderStatusHistory> {
+    const orderStatusHistory = this.orderStatusHistoryRepository.create(
+      createOrderStatusHistoryDto,
+    );
     return await this.orderStatusHistoryRepository.save(orderStatusHistory);
   }
 
@@ -22,15 +26,23 @@ export class OrderStatusHistoryService {
   }
 
   async findOne(id: number): Promise<OrderStatusHistory> {
-    const orderStatusHistory = await this.orderStatusHistoryRepository.findOne({ where: { id } });
+    const orderStatusHistory = await this.orderStatusHistoryRepository.findOne({
+      where: { id },
+    });
     if (!orderStatusHistory) {
       throw new Error(`Order status history with id ${id} not found`);
     }
     return orderStatusHistory;
   }
 
-  async update(id: number, updateOrderStatusHistoryDto: UpdateOrderStatusHistoryDto): Promise<OrderStatusHistory> {
-    await this.orderStatusHistoryRepository.update(id, updateOrderStatusHistoryDto);
+  async update(
+    id: number,
+    updateOrderStatusHistoryDto: UpdateOrderStatusHistoryDto,
+  ): Promise<OrderStatusHistory> {
+    await this.orderStatusHistoryRepository.update(
+      id,
+      updateOrderStatusHistoryDto,
+    );
     const updatedOrderStatusHistory = await this.findOne(id);
     return updatedOrderStatusHistory;
   }
