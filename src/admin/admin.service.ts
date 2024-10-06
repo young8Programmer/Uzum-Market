@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Admin } from './entities/admin.entity';
@@ -14,45 +19,51 @@ export class AdminService {
     private userService: UserService,
   ) {}
 
-  
   async create(createAdminDto: CreateAdminDto) {
-    const user = await this.userService.findOne(createAdminDto.userId);
-    if (!user) {
-      throw new NotFoundException(`ID ${createAdminDto.userId} bo'lgan foydalanuvchi topilmadi`);
+    try {
+      const user = await this.userService.findOne(createAdminDto.userId);
+      if (!user) {
+        throw new NotFoundException(`ID ${createAdminDto.userId} bo'lgan foydalanuvchi topilmadi`);
+      }
+
+      const existingAdmin = await this.adminRepository.findOne({
+        where: { userId: createAdminDto.userId },
+      });
+      if (existingAdmin) {
+        throw new BadRequestException(`Foydalanuvchi allaqachon admin sifatida qo'shilgan`);
+      }
+
+      this.validatePermissions(createAdminDto.permissions);
+
+      const admin = this.adminRepository.create(createAdminDto);
+      return await this.adminRepository.save(admin);
+    } catch (error) {
+      console.error('Error creating admin:', error);
+      throw new InternalServerErrorException('Adminni yaratishda xato');
     }
-  
-    // Shu yerda admin allaqachon mavjudligini tekshirish
-    const existingAdmin = await this.adminRepository.findOne({ where: { userId: createAdminDto.userId } });
-    if (existingAdmin) {
-      throw new BadRequestException(`Foydalanuvchi allaqachon admin sifatida qo'shilgan`);
-    }
-  
-    this.validatePermissions(createAdminDto.permissions);
-  
-    const admin = this.adminRepository.create({
-      userId: createAdminDto.userId,
-      permissions: createAdminDto.permissions,
-    });
-    return this.adminRepository.save(admin);
   }
-  
 
   async update(id: number, updateAdminDto: UpdateAdminDto) {
-    const admin = await this.findOne(id);
+    try {
+      const admin = await this.findOne(id);
 
-    if (updateAdminDto.userId) {
-      const user = await this.userService.findOne(updateAdminDto.userId);
-      if (!user) {
-        throw new NotFoundException(`ID ${updateAdminDto.userId} bo'lgan foydalanuvchi topilmadi`);
+      if (updateAdminDto.userId) {
+        const user = await this.userService.findOne(updateAdminDto.userId);
+        if (!user) {
+          throw new NotFoundException(`ID ${updateAdminDto.userId} bo'lgan foydalanuvchi topilmadi`);
+        }
       }
-    }
 
-    if (updateAdminDto.permissions) {
-      this.validatePermissions(updateAdminDto.permissions)
-    }
+      if (updateAdminDto.permissions) {
+        this.validatePermissions(updateAdminDto.permissions);
+      }
 
-    Object.assign(admin, updateAdminDto);
-    return this.adminRepository.save(admin);
+      Object.assign(admin, updateAdminDto);
+      return await this.adminRepository.save(admin);
+    } catch (error) {
+      console.error('Error updating admin:', error);
+      throw new InternalServerErrorException('Adminni yangilashda xato');
+    }
   }
 
   findAll() {
@@ -71,13 +82,15 @@ export class AdminService {
     const admin = await this.findOne(id);
     return this.adminRepository.remove(admin);
   }
+
   private validatePermissions(permissions: string[]) {
     const allowedRoles = ['admin', 'store_owner', 'manager', 'user'];
-    const invalidPermissions = permissions.filter(permission => !allowedRoles.includes(permission));
+    const invalidPermissions = permissions.filter(
+      (permission) => !allowedRoles.includes(permission),
+    );
 
     if (invalidPermissions.length > 0) {
       throw new BadRequestException(`Quyidagi permissions to'g'ri emas: ${invalidPermissions.join(', ')}`);
     }
   }
 }
-

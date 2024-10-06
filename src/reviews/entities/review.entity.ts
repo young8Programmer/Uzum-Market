@@ -1,23 +1,27 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
-
 export class Review {
-      @PrimaryGeneratedColumn()
-    id: number;
-    
-    @Column()
-    product_id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    user_id: number;
+  @Column()
+  product_id: number;
 
-    @Column()
-    rating: number;
+  @Column()
+  user_id: number;
 
-    @Column()
-    comment: string;
+  @Column()
+  rating: number;
 
-    @CreateDateColumn()
-     review_date:Date
- }
+  @Column()
+  comment: string;
+
+  @CreateDateColumn()
+  review_date: Date;
+}

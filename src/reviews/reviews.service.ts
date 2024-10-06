@@ -24,14 +24,14 @@ export class ReviewsService {
   async findOne(id: number): Promise<Review> {
     const review = await this.reviewRepository.findOne({ where: { id } });
     if (!review) {
-      throw new NotFoundException(`Review with ID ${id} not found`); 
+      throw new NotFoundException(`Review with ID ${id} not found`);
     }
     return review;
   }
 
   async update(id: number, updateReviewDto: UpdateReviewDto): Promise<Review> {
-    const review = await this.findOne(id); 
-    Object.assign(review, updateReviewDto); 
+    const review = await this.findOne(id);
+    Object.assign(review, updateReviewDto);
     return this.reviewRepository.save(review);
   }
 

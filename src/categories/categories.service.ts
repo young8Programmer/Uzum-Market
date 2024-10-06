@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -8,13 +12,16 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class CategoriesService {
   constructor(
-    @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
   ) {}
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const existingCategory = await this.findByName(createCategoryDto.name);
     if (existingCategory) {
-      throw new ConflictException(`Category name '${createCategoryDto.name}' is already taken`);
+      throw new ConflictException(
+        `Category name '${createCategoryDto.name}' is already taken`,
+      );
     }
 
     const newCategory = this.categoryRepository.create(createCategoryDto);
@@ -33,15 +40,18 @@ export class CategoriesService {
     return await this.categoryRepository.findOne({ where: { name } });
   }
 
-  async update(id: number, updateCategoryDto: UpdateCategoryDto): Promise<Category> {
+  async update(
+    id: number,
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise<Category> {
     const category = await this.findOne(id);
-    
+
     if (!category) {
-        throw new NotFoundException(`Category with ID ${id} not found`);
+      throw new NotFoundException(`Category with ID ${id} not found`);
     }
 
     Object.assign(category, updateCategoryDto);
-    
+
     return await this.categoryRepository.save(category);
   }
 
