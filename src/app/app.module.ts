@@ -6,7 +6,7 @@ import { OrderModule } from 'src/order/order.module';
 import { PaymentModule } from 'src/payments/payments.module';
 import { Order } from 'src/order/entities/order.entity';
 import { AboutUs } from 'src/about_us/entities/about_us.entity';
-import { Admin } from 'typeorm';
+import { Admin } from '../admin/entities/admin.entity';
 import { Cart } from 'src/cart/entities/cart.entity';
 import { CartItem } from 'src/cart_items/entities/cart_item.entity';
 import { Category } from 'src/categories/entities/category.entity';
@@ -36,8 +36,8 @@ import { UserModule } from 'src/user/user.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'azizbek002',
-      database: '0000',
+      password: 'Vali336699',
+      database: 'n9',
       entities: [
         Order,
         AboutUs,

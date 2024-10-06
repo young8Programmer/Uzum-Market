@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { CreateAdminDto } from './dto/create-admin.dto';
+import { UpdateAdminDto } from './dto/update-admin.dto';
 
 @Controller('admin')
 export class AdminController {
@@ -32,7 +33,7 @@ export class AdminController {
   @Put(':id')
   async update(
     @Param('id') id: string,
-    @Body() updateAdminDto: CreateAdminDto,
+    @Body() updateAdminDto: UpdateAdminDto,
   ) {
     return this.adminService.update(+id, updateAdminDto);
   }
