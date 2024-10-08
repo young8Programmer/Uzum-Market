@@ -6,6 +6,8 @@ import {
   IsEnum,
   Length,
 } from 'class-validator';
+import { UserRole } from '../user-role.enum';
+
 
 export class CreateUserDto {
   @IsString()
@@ -24,6 +26,6 @@ export class CreateUserDto {
   @IsPhoneNumber(null)
   phone_number: string;
 
-  @IsEnum(['user', 'admin', 'store_owner', 'manager'])
+  @IsEnum(UserRole)
   role: 'user' | 'admin' | 'store_owner' | 'manager';
 }

@@ -28,6 +28,8 @@ import { ProductsModule } from 'src/products/products.module';
 import { ReviewsModule } from 'src/reviews/reviews.module';
 import { ShippingAddressModule } from 'src/shipping_address/shipping_address.module';
 import { UserModule } from 'src/user/user.module';
+import { AuthModule } from 'src/auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -68,6 +70,11 @@ import { UserModule } from 'src/user/user.module';
     ReviewsModule,
     ShippingAddressModule,
     UserModule,
+    AuthModule,
+    JwtModule.register({
+      secret: 'judayam_secret_key',
+      signOptions: { expiresIn: '1h' }
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
