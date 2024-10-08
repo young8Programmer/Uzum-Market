@@ -28,6 +28,8 @@ import { ProductsModule } from 'src/products/products.module';
 import { ReviewsModule } from 'src/reviews/reviews.module';
 import { ShippingAddressModule } from 'src/shipping_address/shipping_address.module';
 import { UserModule } from 'src/user/user.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -36,8 +38,8 @@ import { UserModule } from 'src/user/user.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'Vali336699',
-      database: 'n9',
+      password: 'azizbek002',
+      database: '1010',
       entities: [
         Order,
         AboutUs,
@@ -54,6 +56,9 @@ import { UserModule } from 'src/user/user.module';
         User,
       ],
       synchronize: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', './src/uploads'),
     }),
     OrderModule,
     PaymentModule,

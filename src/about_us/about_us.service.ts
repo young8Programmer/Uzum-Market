@@ -13,8 +13,11 @@ export class AboutUsService {
   ) {}
 
   async create(createAboutUsDto: CreateAboutUsDto): Promise<AboutUs> {
-    const newAboutUs = this.aboutUsRepository.create(createAboutUsDto);
-    return this.aboutUsRepository.save(newAboutUs);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const aboutUs = this.aboutUsRepository.create(createAboutUsDto);
+    await this.aboutUsRepository.save(aboutUs);
+
+    return aboutUs;
   }
 
   async findAll(): Promise<AboutUs[]> {

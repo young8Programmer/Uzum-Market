@@ -3,7 +3,6 @@ import { AppModule } from './app/app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  //// abc
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
     new ValidationPipe({
