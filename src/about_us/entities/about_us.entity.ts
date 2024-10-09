@@ -22,4 +22,7 @@ export class AboutUs {
 
   @Column()
   team: string;
+
+  @Column({ type: 'varchar' })
+  photo: string;
 }

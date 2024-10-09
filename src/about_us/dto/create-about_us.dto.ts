@@ -24,4 +24,6 @@ export class CreateAboutUsDto {
   @IsNotEmpty()
   @IsString()
   team: string;
+
+  photo: string;
 }

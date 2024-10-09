@@ -28,8 +28,13 @@ import { ProductsModule } from 'src/products/products.module';
 import { ReviewsModule } from 'src/reviews/reviews.module';
 import { ShippingAddressModule } from 'src/shipping_address/shipping_address.module';
 import { UserModule } from 'src/user/user.module';
+
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+
 
 @Module({
   imports: [
@@ -38,8 +43,8 @@ import { JwtModule } from '@nestjs/jwt';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'Vali336699',
-      database: 'n9',
+      password: 'azizbek002',
+      database: '1010',
       entities: [
         Order,
         AboutUs,
@@ -56,6 +61,9 @@ import { JwtModule } from '@nestjs/jwt';
         User,
       ],
       synchronize: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', './src/uploads'),
     }),
     OrderModule,
     PaymentModule,
