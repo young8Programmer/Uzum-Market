@@ -9,8 +9,8 @@ export class Auth {
   userId: number;
 
   @Column()
-  refreshToken: string; // Foydalanuvchi uchun refresh token
+  refreshToken: string;
 
   @Column()
-  accessToken: string; // Foydalanuvchi uchun access token
+  accessToken: string;
 }

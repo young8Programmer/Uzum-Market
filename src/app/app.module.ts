@@ -34,6 +34,7 @@ import { join } from 'path';
 
 import { AuthModule } from 'src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { Auth } from 'src/auth/entities/auth.entity';
 
 
 @Module({
@@ -43,8 +44,8 @@ import { JwtModule } from '@nestjs/jwt';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'azizbek002',
-      database: '1010',
+      password: 'Vali336699',
+      database: 'n9',
       entities: [
         Order,
         AboutUs,
@@ -59,6 +60,7 @@ import { JwtModule } from '@nestjs/jwt';
         Review,
         ShippingAddress,
         User,
+        Auth
       ],
       synchronize: true,
     }),
