@@ -8,7 +8,6 @@ import {
 } from 'class-validator';
 import { UserRole } from '../user-role.enum';
 
-
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
@@ -27,5 +26,5 @@ export class CreateUserDto {
   phone_number: string;
 
   @IsEnum(UserRole)
-  role: 'user' | 'admin' | 'store_owner' | 'manager';
+  role: UserRole
 }
