@@ -43,8 +43,8 @@ import { JwtModule } from '@nestjs/jwt';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'azizbek002',
-      database: '1010',
+      password: 'Vali336699',
+      database: 'n9',
       entities: [
         Order,
         AboutUs,
