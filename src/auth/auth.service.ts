@@ -39,7 +39,7 @@ export class AuthService {
         const refreshToken = this.jwtService.sign(payload, { expiresIn: "7d" });
         await this.saveRefreshToken(user.id, refreshToken, accessToken); 
 
-        return { access_token: accessToken};
+        return { access_token: accessToken, refresh_token: refreshToken};
     }
 
     async saveRefreshToken(userId: number, refreshToken: string, accessToken: string) {
@@ -47,7 +47,7 @@ export class AuthService {
         auth.userId = userId;
         auth.refreshToken = refreshToken;
         auth.accessToken = accessToken
-        await this.authRepository.save(auth)
+        await this.authRepository.save(auth);
     }
 
     async refreshToken(userId: number, refreshToken: string) {
@@ -61,7 +61,7 @@ export class AuthService {
         const payload = { username: user.username, sub: userId, role: user.role };
         const newAccessToken = this.jwtService.sign(payload);
 
-        return { access_token: newAccessToken }
+        return { access_token: newAccessToken};
     }
 
     async register(registerDto: RegisterDto) {
