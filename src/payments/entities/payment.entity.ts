@@ -8,6 +8,10 @@ import {
   IsNotEmpty,
 } from 'class-validator';
 import { Order } from 'src/order/entities/order.entity';
+<<<<<<< HEAD
+=======
+
+>>>>>>> ef4906bce037dab6c35425be78456a0dbd011076
 
 @Entity('payments')
 export class Payment {
@@ -40,7 +44,11 @@ export class Payment {
   @IsString()
   status: string;
 
+<<<<<<< HEAD
   @ManyToOne(() => Order, (order) => order.payments)
+=======
+  @ManyToOne(() => Order, order => order.payments)
+>>>>>>> ef4906bce037dab6c35425be78456a0dbd011076
   order: Order;
 
 }
