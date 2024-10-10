@@ -9,6 +9,7 @@ export class CartItem {
 
   @Column()
   product_id: number;
+  product_name: string;
 
   @Column()
   quantity: number;

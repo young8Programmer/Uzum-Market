@@ -1,3 +1,4 @@
+import { User } from './../user/entities/user.entity';
 import {
   Body,
   Controller,
@@ -9,8 +10,9 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { UserService } from '../user/user.service';
 import { RegisterDto } from './dto/register.dto';
-import { UserRole } from 'src/enums/user_role.enum';
 import * as bcrypt from 'bcrypt';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { UserRole } from 'src/user/user-role.enum';
 
 @Controller('auth')
 export class AuthController {
@@ -26,6 +28,7 @@ export class AuthController {
     return await bcrypt.compare(plainPassword, hashedPassword);
   }
 
+
   @Post('register')
   async register(@Body() registerDto: RegisterDto): Promise<{ message: string }> {
     const existingUser = await this.userService.findByEmail(registerDto.email);
@@ -36,14 +39,16 @@ export class AuthController {
 
     const hashedPassword = await this.authService.hashPassword(registerDto.password);
 
-    const createUserDto = {
-      ...registerDto,
-      password: hashedPassword,
-      role: registerDto.role || UserRole.User,
-    };
+    // To'g'ri qilib createUserDto yaratamiz
+    const createUserDto = new CreateUserDto(); // Yangi instansiya yaratamiz
+    createUserDto.email = registerDto.email;
+    createUserDto.password = hashedPassword;
+    createUserDto.role = registerDto.role as UserRole || UserRole.USER;
 
-    await this.userService.create(createUserDto);
-    return { message: 'Foydalanuvchi muvaffaqiyatli ro\'yxatdan o\'tdi' };
+
+    await this.userService.create(createUserDto); // createUserDto obyekti uzatiladi
+
+    return { message: "Foydalanuvchi muvaffaqiyatli ro'yxatdan o'tdi" };
   }
 
   @Post('login')

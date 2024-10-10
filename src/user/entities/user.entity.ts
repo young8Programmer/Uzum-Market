@@ -3,8 +3,8 @@ import { UserOrder } from 'src/user_orders/entities/user_order.entity';
 import { Admin } from 'src/admin/entities/admin.entity'; 
 import { ShippingAddress } from 'src/shipping_address/entities/shipping_address.entity';
 import { Review } from 'src/reviews/entities/review.entity';
-
 import { Cart } from 'src/cart/entities/cart.entity';
+
 
 @Entity()
 export class User {
@@ -43,4 +43,5 @@ export class User {
 
   @OneToMany(() => Review, (review) => review.user)
   reviews: Review[];
+
 }

@@ -26,6 +26,7 @@ export class Product {
   description: string;
 
   @Column('decimal')
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
   @Column()
@@ -50,4 +51,5 @@ export class Product {
 
     @OneToMany(() => CartItem, (cartItem) => cartItem.product) 
   cartItems: CartItem[];
+
 }

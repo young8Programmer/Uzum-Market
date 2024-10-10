@@ -8,20 +8,37 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { CreateAboutUsDto } from './dto/create-about_us.dto';
 import { AboutUsService } from './about_us.service';
 import { AboutUs } from './entities/about_us.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('about-us')
 export class AboutUsController {
-  constructor(private readonly aboutUsService: AboutUsService) {}
+  constructor(private readonly aboutUsService: AboutUsService) { }
 
   @Post()
+  @UseInterceptors(
+    FileInterceptor('photo', {
+      storage: diskStorage({
+        destination: './src/uploads/about-us',
+        filename(req, file, callback) {
+          const fileName = `${Math.round(Math.random() * 1e6)}_${Date.now()}_${file.originalname}`;
+          callback(null, fileName);
+        },
+      }),
+    }),
+  )
   async create(
+    @UploadedFile() file: Express.Multer.File,
     @Body() createAboutUsDto: CreateAboutUsDto,
   ): Promise<{ message: string; aboutUs: AboutUs }> {
     try {
+      if (file) createAboutUsDto.photo = file.filename;
       const aboutUs = await this.aboutUsService.create(createAboutUsDto);
       return { message: 'About Us muvaffaqiyatli yaratildi!', aboutUs };
     } catch (error) {
@@ -79,12 +96,8 @@ export class AboutUsController {
     @Body() updateAboutUsDto: CreateAboutUsDto,
   ): Promise<{ message: string; aboutUs?: AboutUs }> {
     try {
-      const updatedAboutUs = await this.aboutUsService.update(
-        +id,
-        updateAboutUsDto,
-      );
+      const updatedAboutUs = await this.aboutUsService.update(+id, updateAboutUsDto);
       if (updatedAboutUs) {
-        // Use 'aboutUs' as the key, not 'updatedAboutUs'
         return {
           message: `About Us #${id} yangilandi`,
           aboutUs: updatedAboutUs,

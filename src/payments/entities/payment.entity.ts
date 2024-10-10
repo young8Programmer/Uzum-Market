@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+
 import {
   IsNumber,
   IsDateString,
@@ -41,4 +42,5 @@ export class Payment {
 
   @ManyToOne(() => Order, (order) => order.payments)
   order: Order;
+
 }

@@ -36,6 +36,12 @@ import { Coupon } from 'src/coupons/entities/coupon.entity';
 import { CouponsModule } from 'src/coupons/coupons.module';
 import { AuthModule } from 'src/auth/auth.module';
 
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
+import { JwtModule } from '@nestjs/jwt';
+import { Auth } from 'src/auth/entities/auth.entity';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -62,8 +68,12 @@ import { AuthModule } from 'src/auth/auth.module';
         UserOrder,
         Discount,
         Coupon,
+        Auth,
       ],
       synchronize: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', './src/uploads'),
     }),
     OrderModule,
     PaymentModule,
@@ -82,9 +92,12 @@ import { AuthModule } from 'src/auth/auth.module';
     DiscountsModule,
     CouponsModule,
     AuthModule,
-
+    JwtModule.register({
+      secret: 'judayam_secret_key',
+      signOptions: { expiresIn: '1h' }
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

@@ -12,6 +12,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { AuthService } from '../auth/auth.service';
 import { LoginDto } from '../auth/dto/login.dto';
 
+
 @Controller('users')
 export class UserController {
   constructor(
@@ -67,3 +68,5 @@ export class UserController {
     return { token };
   }
 }
+
+
