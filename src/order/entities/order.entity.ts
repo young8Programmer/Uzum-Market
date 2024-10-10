@@ -5,6 +5,7 @@ import {
   OneToMany,
   ManyToOne,
 } from 'typeorm';
+
 import {
   IsNumber,
   IsDateString,
@@ -15,6 +16,10 @@ import {
 } from 'class-validator';
 import { OrderStatusHistory } from 'src/order_status_history/entities/order_status_history.entity';
 import { OrderItem } from 'src/order_items/entities/order_item.entity';
+import { UserOrder } from 'src/user_orders/entities/user_order.entity';
+import { Payment } from 'src/payments/entities/payment.entity';
+
+
 
 @Entity('orders')
 export class Order {
@@ -31,10 +36,13 @@ export class Order {
   @IsDateString()
   order_date: Date;
 
+
+
   @Column({ type: 'varchar', length: 50 })
   @IsNotEmpty()
   @IsString()
   status: string;
+
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   @IsNotEmpty()
@@ -48,4 +56,11 @@ export class Order {
 
   @ManyToOne(() => OrderStatusHistory, (statusHistory) => statusHistory.order)
   statusHistory: OrderStatusHistory[];
+
+  @OneToMany(() => UserOrder, (userOrder) => userOrder.order)
+  userOrders: UserOrder[];
+
+  @OneToMany(() => Payment, (payment) => payment.order)
+  payments: Payment[];
 }
+

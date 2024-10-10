@@ -10,15 +10,13 @@ export class AboutUsService {
   constructor(
     @InjectRepository(AboutUs)
     private readonly aboutUsRepository: Repository<AboutUs>,
-  ) {}
+  ) { }
 
   async create(createAboutUsDto: CreateAboutUsDto): Promise<AboutUs> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const aboutUs = this.aboutUsRepository.create(createAboutUsDto);
-    await this.aboutUsRepository.save(aboutUs);
-
-    return aboutUs;
+    const newAboutUs = this.aboutUsRepository.create(createAboutUsDto);
+    return this.aboutUsRepository.save(newAboutUs);
   }
+
 
   async findAll(): Promise<AboutUs[]> {
     return this.aboutUsRepository.find();
@@ -45,4 +43,5 @@ export class AboutUsService {
     const aboutUs = await this.findOne(id);
     await this.aboutUsRepository.delete(aboutUs.id);
   }
+
 }

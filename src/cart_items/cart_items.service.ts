@@ -29,7 +29,7 @@ export class StoreOwnersService {
     const existingItem = await this.storeOwnersRepository.findOne({
       where: {
         user_id: createCartItemDto.user_id,
-        product_name: createCartItemDto.product_name,
+        product_id: createCartItemDto.product_id,
       },
     });
 

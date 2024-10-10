@@ -17,7 +17,8 @@ export class AdminService {
     @InjectRepository(Admin)
     private adminRepository: Repository<Admin>,
     private userService: UserService,
-  ) {}
+  ) { }
+  
 
   async create(createAdminDto: CreateAdminDto) {
     try {
@@ -27,21 +28,22 @@ export class AdminService {
       }
 
       const existingAdmin = await this.adminRepository.findOne({
-        where: { userId: createAdminDto.userId },
-      });
-      if (existingAdmin) {
-        throw new BadRequestException(`Foydalanuvchi allaqachon admin sifatida qo'shilgan`);
-      }
+        where: { user: { id: createAdminDto.userId } },
+        })
+        if(existingAdmin) {
+          throw new BadRequestException(`Foydalanuvchi allaqachon admin sifatida qo'shilgan`);
+        }
 
       this.validatePermissions(createAdminDto.permissions);
 
-      const admin = this.adminRepository.create(createAdminDto);
-      return await this.adminRepository.save(admin);
-    } catch (error) {
-      console.error('Error creating admin:', error);
-      throw new InternalServerErrorException('Adminni yaratishda xato');
+        const admin = this.adminRepository.create(createAdminDto);
+        return await this.adminRepository.save(admin);
+      } catch (error) {
+        console.error('Error creating admin:', error);
+        throw new InternalServerErrorException('Adminni yaratishda xato');
+      }
     }
-  }
+  
 
   async update(id: number, updateAdminDto: UpdateAdminDto) {
     try {
@@ -93,4 +95,8 @@ export class AdminService {
       throw new BadRequestException(`Quyidagi permissions to'g'ri emas: ${invalidPermissions.join(', ')}`);
     }
   }
+
+
 }
+
+

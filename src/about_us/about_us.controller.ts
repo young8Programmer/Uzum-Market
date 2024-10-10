@@ -19,7 +19,7 @@ import { diskStorage } from 'multer';
 
 @Controller('about-us')
 export class AboutUsController {
-  constructor(private readonly aboutUsService: AboutUsService) {}
+  constructor(private readonly aboutUsService: AboutUsService) { }
 
   @Post()
   @UseInterceptors(
@@ -33,23 +33,13 @@ export class AboutUsController {
       }),
     }),
   )
-  createAboutUs(
+  async create(
     @UploadedFile() file: Express.Multer.File,
-    @Body() aboutUsCreateDto: CreateAboutUsDto,
-  ) {
-    if (file) aboutUsCreateDto.photo = file.filename;
-    return this.aboutUsService.create(aboutUsCreateDto);
-  }
-
-  @Post()
-  @UseInterceptors(FileInterceptor('photo', { dest: './src/uploads' }))
-  async createAboutUsDto(
-    @UploadedFile() file: Express.Multer.File,
-    @Body() aboutUsCreateDto: CreateAboutUsDto,
+    @Body() createAboutUsDto: CreateAboutUsDto,
   ): Promise<{ message: string; aboutUs: AboutUs }> {
-    console.log(aboutUsCreateDto, file);
     try {
-      const aboutUs = await this.aboutUsService.create(aboutUsCreateDto);
+      if (file) createAboutUsDto.photo = file.filename;
+      const aboutUs = await this.aboutUsService.create(createAboutUsDto);
       return { message: 'About Us muvaffaqiyatli yaratildi!', aboutUs };
     } catch (error) {
       console.error('Xatolik: ', error);
@@ -106,12 +96,8 @@ export class AboutUsController {
     @Body() updateAboutUsDto: CreateAboutUsDto,
   ): Promise<{ message: string; aboutUs?: AboutUs }> {
     try {
-      const updatedAboutUs = await this.aboutUsService.update(
-        +id,
-        updateAboutUsDto,
-      );
+      const updatedAboutUs = await this.aboutUsService.update(+id, updateAboutUsDto);
       if (updatedAboutUs) {
-        // Use 'aboutUs' as the key, not 'updatedAboutUs'
         return {
           message: `About Us #${id} yangilandi`,
           aboutUs: updatedAboutUs,

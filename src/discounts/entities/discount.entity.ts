@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Product } from 'src/products/entities/product.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
 
 @Entity('discounts')
 export class Discount {
@@ -13,4 +14,7 @@ export class Discount {
 
   @Column({ type: 'date' })
   valid_until: Date;
+  @ManyToMany(() => Product, (product) => product.discounts)
+  @JoinTable()
+  products: Product[]
 }
