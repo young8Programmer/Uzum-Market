@@ -7,6 +7,7 @@ import {
   Length,
 } from 'class-validator';
 import { UserRole } from '../user-role.enum';
+
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
@@ -30,6 +31,4 @@ export class CreateUserDto {
 
   @IsPhoneNumber(null)
   phone_number: string;
-
-
 }

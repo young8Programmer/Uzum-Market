@@ -13,8 +13,10 @@ import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { UserRole } from 'src/user/user-role.enum';
+import { Controller, Post, Body } from "@nestjs/common";
+import { AuthService } from "./auth.service";
 
-@Controller('auth')
+@Controller("auth")
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
@@ -69,3 +71,11 @@ export class AuthController {
     return { token };
   }
 }
+
+
+  @Post("refresh-token")
+  async refreshToken(@Body() body: { userId: number; refreshToken: string }) {
+    return this.authService.refreshToken(body.userId, body.refreshToken);
+  }
+}
+

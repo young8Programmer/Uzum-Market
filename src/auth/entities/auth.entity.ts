@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class Auth {
@@ -9,8 +9,8 @@ export class Auth {
   userId: number;
 
   @Column()
-  refreshToken: string; 
+  refreshToken: string;
 
   @Column()
-  accessToken: string; 
+  accessToken: string;
 }

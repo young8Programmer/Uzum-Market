@@ -1,3 +1,4 @@
+
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -45,12 +46,15 @@ import { Auth } from 'src/auth/entities/auth.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
+      type: "postgres",
+      host: "localhost",
       port: 5432,
       username: 'postgres',
       password: '4545',
       database: 'uzum',
+      username: "postgres",
+      password: "Vali336699",
+      database: "n9",
       entities: [
         Order,
         AboutUs,
@@ -65,6 +69,7 @@ import { Auth } from 'src/auth/entities/auth.entity';
         Review,
         ShippingAddress,
         User,
+
         UserOrder,
         Discount,
         Coupon,
@@ -73,7 +78,7 @@ import { Auth } from 'src/auth/entities/auth.entity';
       synchronize: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', './src/uploads'),
+      rootPath: join(__dirname, "..", "./src/uploads"),
     }),
     OrderModule,
     PaymentModule,
@@ -93,8 +98,8 @@ import { Auth } from 'src/auth/entities/auth.entity';
     CouponsModule,
     AuthModule,
     JwtModule.register({
-      secret: 'judayam_secret_key',
-      signOptions: { expiresIn: '1h' }
+      secret: "judayam_secret_key",
+      signOptions: { expiresIn: "1h" }
     }),
   ],
   controllers: [AppController],
