@@ -51,22 +51,23 @@ export class UserController {
   }
 
   @Post('login')
-  async login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
-    const user = await this.userService.findByEmail(loginDto.email);
+async login(@Body() loginDto: LoginDto): Promise<{ token: string }> {
+  const user = await this.userService.findByPassport(loginDto.password);
 
-    if (!user) {
-      throw new Error('Foydalanuvchi topilmadi');
-    }
-
-    const isPasswordValid = await this.authService.comparePassword(loginDto.password, user.password);
-
-    if (!isPasswordValid) {
-      throw new Error('Noto\'g\'ri parol');
-    }
-
-    const token = await this.authService.generateToken(user);
-    return { token };
+  if (!user) {
+    throw new Error('Foydalanuvchi topilmadi');
   }
+
+  const isPasswordValid = await this.userService.comparePassword(loginDto.password, user.password);
+
+  if (!isPasswordValid) {
+    throw new Error('Noto\'g\'ri parol');
+  }
+
+  const token = await this.userService.generateToken(user);
+  return { token };
+}
+
 }
 
 

@@ -1,22 +1,18 @@
-import {
-  Injectable,
-  NotFoundException,
-  ConflictException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException, } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dto/update-user.dto';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
-  ) { }
-
+  ) {}
 
   async create(createUserDto: CreateUserDto) {
     const existingUser = await this.userRepository.findOne({
@@ -49,7 +45,7 @@ export class UserService {
     return user;
   }
 
-  async update(id: number, updateUserDto: CreateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.findOne(id);
     if (updateUserDto.email) {
       const existingEmail = await this.userRepository.findOne({
@@ -60,27 +56,45 @@ export class UserService {
       }
     }
 
+    if (updateUserDto.password) {
+      const hashedPassword = await bcrypt.hash(updateUserDto.password, 10);
+      updateUserDto.password = hashedPassword;
+    }
+
     await this.userRepository.update(id, updateUserDto);
     return this.userRepository.findOneBy({ id });
   }
 
   async remove(id: number) {
     const user = await this.findOne(id);
-    return this.userRepository.delete(user.id);
+    if (!user) {
+      throw new NotFoundException(`ID ${id} bo'lgan foydalanuvchi topilmadi`);
+    }
+    await this.userRepository.remove(user);
+    return { message: 'Foydalanuvchi muvaffaqiyatli o\'chirildi' };
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    return this.userRepository.findOne({
-      where: { email },
-    });
+  async comparePassword(password: string, hashedPassword: string) {
+    return bcrypt.compare(password, hashedPassword);
+  }
+  
+  async findByPassport(passport: string): Promise<User | null> {
+    return await this.userRepository.findOne({ where: { password: passport } });
   }
 
-  async findByUsername(username: string): Promise<User | undefined> {
-    return this.userRepository.findOne({ where: { username } });
+  async generateToken(user: User): Promise<string> {
+    const payload = { id: user.id, username: user.username };
+    const secretKey = 'yourSecretKey';
+
+    return jwt.sign(payload, secretKey, { expiresIn: '1h' })
   }
 
-    async findById(id: number): Promise<User | null> {
-    return this.userRepository.findOne({ where: { id } });
-}
+  async findByUsername(username: string): Promise<User | null> {
+    return await this.userRepository.findOne({ where: { username } });
+  }
+
+  async findById(id: number): Promise<User | null> {
+    return await this.userRepository.findOne({ where: { id } });
+  }
 
 }

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { IsNotEmpty, IsNumber } from 'class-validator';
 import { CartItem } from 'src/cart_items/entities/cart_item.entity';
 import { User } from 'src/user/entities/user.entity';

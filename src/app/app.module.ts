@@ -49,12 +49,9 @@ import { Auth } from 'src/auth/entities/auth.entity';
       type: "postgres",
       host: "localhost",
       port: 5432,
-      username: 'postgres',
-      password: '4545',
-      database: 'uzum',
       username: "postgres",
       password: "Vali336699",
-      database: "n9",
+      database: "uzum_market",
       entities: [
         Order,
         AboutUs,
@@ -69,7 +66,6 @@ import { Auth } from 'src/auth/entities/auth.entity';
         Review,
         ShippingAddress,
         User,
-
         UserOrder,
         Discount,
         Coupon,

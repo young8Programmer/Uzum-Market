@@ -6,5 +6,3 @@ export enum UserRole {
   MANAGER = 'manager',
 }
 
-
-
