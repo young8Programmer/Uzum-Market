@@ -4,6 +4,7 @@ import { Admin } from 'src/admin/entities/admin.entity';
 import { ShippingAddress } from 'src/shipping_address/entities/shipping_address.entity';
 import { Review } from 'src/reviews/entities/review.entity';
 import { Cart } from 'src/cart/entities/cart.entity';
+import { UserRole } from '../user-role.enum';
 
 
 @Entity()
@@ -26,6 +27,7 @@ export class User {
   @Column({
     type: 'enum',
     enum: ['user', 'admin', 'store_owner', 'manager'],
+    default: UserRole.USER
   })
   role: string;
 

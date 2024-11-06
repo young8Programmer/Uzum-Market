@@ -8,18 +8,25 @@ import {
   Body,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { ShippingAddressService } from './shipping_address.service';
 import { CreateShippingAddressDto } from './dto/create-shipping_address.dto';
 import { UpdateShippingAddressDto } from './dto/update-shipping_address.dto';
 import { ShippingAddress } from './entities/shipping_address.entity';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { UserRole } from 'src/user/user-role.enum';
 
 @Controller('shipping-address')
+@UseGuards(AuthGuard, RolesGuard)
 export class ShippingAddressController {
   constructor(
     private readonly shippingAddressService: ShippingAddressService,
   ) {}
 
+  @Roles(UserRole.ADMIN)
   @Post()
   async create(
     @Body() createShippingAddressDto: CreateShippingAddressDto,
@@ -35,6 +42,7 @@ export class ShippingAddressController {
     }
   }
 
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.STORE_OWNER, UserRole.USER)
   @Get()
   async findAll(): Promise<{ message: string; data: ShippingAddress[] }> {
     try {
@@ -54,6 +62,7 @@ export class ShippingAddressController {
     }
   }
 
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.STORE_OWNER, UserRole.USER)
   @Get(':id')
   async findOne(
     @Param('id') id: string,
@@ -69,6 +78,7 @@ export class ShippingAddressController {
     }
   }
 
+  @Roles(UserRole.ADMIN)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -85,6 +95,7 @@ export class ShippingAddressController {
     }
   }
 
+  @Roles(UserRole.ADMIN)
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<{ message: string }> {
     try {

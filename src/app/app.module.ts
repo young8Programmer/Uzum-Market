@@ -50,8 +50,8 @@ import { Auth } from 'src/auth/entities/auth.entity';
       host: "localhost",
       port: 5432,
       username: "postgres",
-      password: "Vali336699",
-      database: "uzum_market",
+      password: "1234",
+      database: "online_store",
       entities: [
         Order,
         AboutUs,

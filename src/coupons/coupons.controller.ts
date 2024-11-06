@@ -8,14 +8,21 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { CouponsService } from './coupons.service';
 import { CreateCouponDto } from './dto/create-coupon.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { UserRole } from 'src/user/user-role.enum';
 
 @Controller('coupons')
+@UseGuards(AuthGuard, RolesGuard)
 export class CouponsController {
   constructor(private readonly couponsService: CouponsService) {}
 
+  @Roles(UserRole.ADMIN)
   @Post()
   async create(@Body() createCouponDto: CreateCouponDto) {
     try {
@@ -33,6 +40,7 @@ export class CouponsController {
     }
   }
 
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.STORE_OWNER, UserRole.USER)
   @Get()
   async findAll() {
     const coupons = await this.couponsService.findAll();
@@ -42,6 +50,7 @@ export class CouponsController {
     };
   }
 
+  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.STORE_OWNER, UserRole.ADMIN)
   @Get(':id')
   async findOne(@Param('id') id: number) {
     const coupon = await this.couponsService.findOne(id);
@@ -54,6 +63,7 @@ export class CouponsController {
     };
   }
 
+  @Roles(UserRole.ADMIN)
   @Put(':id')
   async update(
     @Param('id') id: number,
@@ -82,6 +92,7 @@ export class CouponsController {
     }
   }
 
+  @Roles(UserRole.ADMIN)
   @Delete(':id')
   async remove(@Param('id') id: number) {
     const coupon = await this.couponsService.findOne(id);

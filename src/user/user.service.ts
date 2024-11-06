@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ConflictException, } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
@@ -27,9 +27,12 @@ export class UserService {
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-    createUserDto.password = hashedPassword;
+    const user = this.userRepository.create({
+      ...createUserDto,
+      password: hashedPassword,
+      role: createUserDto.role || 'user',
+    });
 
-    const user = this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }
 
@@ -67,9 +70,6 @@ export class UserService {
 
   async remove(id: number) {
     const user = await this.findOne(id);
-    if (!user) {
-      throw new NotFoundException(`ID ${id} bo'lgan foydalanuvchi topilmadi`);
-    }
     await this.userRepository.remove(user);
     return { message: 'Foydalanuvchi muvaffaqiyatli o\'chirildi' };
   }
@@ -77,7 +77,7 @@ export class UserService {
   async comparePassword(password: string, hashedPassword: string) {
     return bcrypt.compare(password, hashedPassword);
   }
-  
+
   async findByPassport(passport: string): Promise<User | null> {
     return await this.userRepository.findOne({ where: { password: passport } });
   }
@@ -86,7 +86,7 @@ export class UserService {
     const payload = { id: user.id, username: user.username };
     const secretKey = 'yourSecretKey';
 
-    return jwt.sign(payload, secretKey, { expiresIn: '1h' })
+    return jwt.sign(payload, secretKey, { expiresIn: '1h' });
   }
 
   async findByUsername(username: string): Promise<User | null> {
@@ -96,5 +96,4 @@ export class UserService {
   async findById(id: number): Promise<User | null> {
     return await this.userRepository.findOne({ where: { id } });
   }
-
 }

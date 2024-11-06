@@ -8,9 +8,9 @@ export class Auth {
   @Column()
   userId: number;
 
-  @Column()
+  @Column({ length: 500 })
   refreshToken: string;
 
-  @Column()
+  @Column({ length: 500 })
   accessToken: string;
 }

@@ -5,11 +5,12 @@ import { JwtModule } from "@nestjs/jwt";
 import { UserModule } from "../user/user.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Auth } from "./entities/auth.entity";
+import { User } from "src/user/entities/user.entity";
 
 @Module({
   imports: [
     forwardRef(() => UserModule),
-    TypeOrmModule.forFeature([Auth]),
+    TypeOrmModule.forFeature([Auth, User]),
     JwtModule.register({
       secret: "judayam_secret_key",
       signOptions: { expiresIn: "1h" },

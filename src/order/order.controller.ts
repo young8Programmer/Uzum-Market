@@ -8,15 +8,22 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { UserRole } from 'src/user/user-role.enum';
 
 @Controller('order')
+@UseGuards(AuthGuard, RolesGuard)
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
+  @Roles(UserRole.ADMIN)
   @Post()
   async create(@Body() createOrderDto: CreateOrderDto) {
     try {
@@ -31,6 +38,7 @@ export class OrderController {
     }
   }
 
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.STORE_OWNER, UserRole.USER)
   @Get()
   async findAll() {
     try {
@@ -51,6 +59,7 @@ export class OrderController {
     }
   }
 
+  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.STORE_OWNER, UserRole.ADMIN)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
@@ -69,6 +78,7 @@ export class OrderController {
     }
   }
 
+  @Roles(UserRole.ADMIN)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -92,6 +102,7 @@ export class OrderController {
     }
   }
 
+  @Roles(UserRole.ADMIN)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {

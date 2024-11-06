@@ -8,15 +8,22 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { PaymentService } from './payments.service';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { UserRole } from 'src/user/user-role.enum';
 
 @Controller('payment')
+@UseGuards(AuthGuard, RolesGuard)
 export class PaymentController {
   constructor(private readonly paymentService: PaymentService) {}
 
+  @Roles(UserRole.ADMIN)
   @Post()
   async create(@Body() createPaymentDto: CreatePaymentDto) {
     console.log('Received Payment DTO:', createPaymentDto);
@@ -32,6 +39,7 @@ export class PaymentController {
     }
   }
 
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.STORE_OWNER, UserRole.USER)
   @Get()
   async findAll() {
     try {
@@ -51,7 +59,7 @@ export class PaymentController {
       );
     }
   }
-
+  @Roles(UserRole.ADMIN, UserRole.MANAGER, UserRole.STORE_OWNER, UserRole.USER)
   @Get(':id')
   async findOne(@Param('id') id: string) {
     try {
@@ -70,6 +78,7 @@ export class PaymentController {
     }
   }
 
+  @Roles(UserRole.ADMIN)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -96,6 +105,7 @@ export class PaymentController {
     }
   }
 
+  @Roles(UserRole.ADMIN)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     try {

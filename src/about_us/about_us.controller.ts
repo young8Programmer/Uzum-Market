@@ -10,17 +10,24 @@ import {
   HttpStatus,
   UseInterceptors,
   UploadedFile,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateAboutUsDto } from './dto/create-about_us.dto';
 import { AboutUsService } from './about_us.service';
 import { AboutUs } from './entities/about_us.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { AuthGuard } from 'src/auth/auth.guard';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { UserRole } from 'src/user/user-role.enum';
 
 @Controller('about-us')
+@UseGuards(AuthGuard, RolesGuard )
 export class AboutUsController {
   constructor(private readonly aboutUsService: AboutUsService) { }
 
+  @Roles(UserRole.ADMIN, UserRole.STORE_OWNER)
   @Post()
   @UseInterceptors(
     FileInterceptor('photo', {
@@ -33,6 +40,7 @@ export class AboutUsController {
       }),
     }),
   )
+  
   async create(
     @UploadedFile() file: Express.Multer.File,
     @Body() createAboutUsDto: CreateAboutUsDto,
@@ -50,6 +58,7 @@ export class AboutUsController {
     }
   }
 
+  @Roles(UserRole.ADMIN, UserRole.STORE_OWNER, UserRole.MANAGER, UserRole.USER)
   @Get()
   async findAll(): Promise<{ message: string; aboutUs: AboutUs[] }> {
     try {
@@ -70,6 +79,7 @@ export class AboutUsController {
     }
   }
 
+  @Roles(UserRole.USER, UserRole.MANAGER, UserRole.STORE_OWNER, UserRole.ADMIN)
   @Get(':id')
   async findOne(
     @Param('id') id: string,
@@ -90,6 +100,7 @@ export class AboutUsController {
     }
   }
 
+  @Roles(UserRole.ADMIN)
   @Patch(':id')
   async update(
     @Param('id') id: string,
@@ -116,6 +127,7 @@ export class AboutUsController {
     }
   }
 
+  @Roles(UserRole.ADMIN, UserRole.STORE_OWNER)
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<{ message: string }> {
     try {
