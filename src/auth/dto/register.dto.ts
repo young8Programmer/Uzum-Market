@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsNotEmpty } from 'class-validator';
+import { IsString, IsEmail, IsNotEmpty, IsEnum, IsOptional, Length, IsPhoneNumber } from 'class-validator';
 import { UserRole } from 'src/user/user-role.enum';
 
 export class RegisterDto {
@@ -6,17 +6,19 @@ export class RegisterDto {
   @IsNotEmpty()
   username: string;
 
-  @IsString()
-  @IsNotEmpty()
-  password: string;
-
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
+  @IsEnum(UserRole)
+  @IsOptional()
+  role?: UserRole;
+  
   @IsString()
   @IsNotEmpty()
-  phone_number: string;
+  @Length(8, 20)
+  password: string;
 
-  role?: string;
+  @IsPhoneNumber(null)
+  phone_number: string;
 }

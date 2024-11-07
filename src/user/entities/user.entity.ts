@@ -7,7 +7,7 @@ import { Cart } from 'src/cart/entities/cart.entity';
 import { UserRole } from '../user-role.enum';
 
 
-@Entity()
+@Entity("users")
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -29,7 +29,7 @@ export class User {
     enum: ['user', 'admin', 'store_owner', 'manager'],
     default: UserRole.USER
   })
-  role: string;
+  role: UserRole;
 
   @OneToMany(() => UserOrder, (userOrder) => userOrder.user)
   userOrders: UserOrder[];

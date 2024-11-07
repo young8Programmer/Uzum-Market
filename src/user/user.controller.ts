@@ -26,7 +26,6 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
 
-  @Roles(UserRole.ADMIN, UserRole.STORE_OWNER)
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);

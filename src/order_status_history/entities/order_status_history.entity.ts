@@ -13,7 +13,7 @@ export enum OrderStatus {
   COMPLETED = 'completed',
   CANCELLED = 'cancelled',
 }
-@Entity()
+@Entity("order_stater_histories")
 export class OrderStatusHistory {
   @PrimaryGeneratedColumn()
   id: number;

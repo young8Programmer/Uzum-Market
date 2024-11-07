@@ -5,6 +5,7 @@ import {
   IsPhoneNumber,
   IsEnum,
   Length,
+  IsOptional,
 } from 'class-validator';
 import { UserRole } from '../user-role.enum';
 
@@ -17,17 +18,14 @@ export class CreateUserDto {
   @IsNotEmpty()
   email: string;
 
-
   @IsEnum(UserRole)
-  @IsNotEmpty()
-  role: UserRole;
- 
-
+  @IsOptional()
+  role?: UserRole;
+  
   @IsString()
   @IsNotEmpty()
   @Length(8, 20)
   password: string;
-
 
   @IsPhoneNumber(null)
   phone_number: string;

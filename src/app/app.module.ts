@@ -51,7 +51,7 @@ import { Auth } from 'src/auth/entities/auth.entity';
       port: 5432,
       username: "postgres",
       password: "1234",
-      database: "online_store",
+      database: "online_stores",
       entities: [
         Order,
         AboutUs,

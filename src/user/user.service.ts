@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as jwt from 'jsonwebtoken';
+import { UserRole } from './user-role.enum';
 
 @Injectable()
 export class UserService {
@@ -16,25 +17,25 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto) {
     const existingUser = await this.userRepository.findOne({
-      where: [
-        { username: createUserDto.username },
-        { email: createUserDto.email },
-      ],
+        where: [
+            { username: createUserDto.username },
+            { email: createUserDto.email },
+        ],
     });
 
     if (existingUser) {
-      throw new ConflictException('Foydalanuvchi yoki email allaqachon mavjud');
+        throw new ConflictException('Foydalanuvchi yoki email allaqachon mavjud');
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-    const user = this.userRepository.create({
-      ...createUserDto,
-      password: hashedPassword,
-      role: createUserDto.role || 'user',
+    const user = await this.userRepository.create({
+        ...createUserDto,
+        password: hashedPassword,
+        role: createUserDto.role,
     });
 
-    return this.userRepository.save(user);
-  }
+    return await this.userRepository.save(user);
+}
 
   async findAll() {
     return this.userRepository.find();
